@@ -43,17 +43,17 @@ def find(bot, update):
     если собеседник найден
     """
     user = update.message.chat_id
-    bot.sendMessage(user, text='Find...')
+    bot.sendMessage(user, text='Kullanıcı Aranıyor...')
     interlocutor = users[user].get('interlocutor')
     if interlocutor:
-        bot.sendMessage(interlocutor, text='Disconnect')
+        bot.sendMessage(interlocutor, text='Bağlantı Kesildi!')
         users[interlocutor]['interlocutor'] = None
         users[user]['interlocutor'] = None
     interlocutor = scan(user)
     if interlocutor:
         connect(user, interlocutor)
-        bot.sendMessage(user, text='Connect success')
-        bot.sendMessage(interlocutor, text='Connect success')
+        bot.sendMessage(user, text='Bağlantı Başarılı!')
+        bot.sendMessage(interlocutor, text='Bağlantı Başarılı!')
     else:
         users[user]['status'] = 'free'
 
@@ -64,11 +64,11 @@ def disconnect(bot, update):
     чтобы не принимать новых сбеседников
     """
     user = update.message.chat_id
-    bot.sendMessage(user, text='Disconnect')
+    bot.sendMessage(user, text='Bağlantı Kesildi!')
     users[user]['status'] = 'busy'
     interlocutor = users[user].get('interlocutor')
     if interlocutor:
-        bot.sendMessage(interlocutor, text='Disconnect')
+        bot.sendMessage(interlocutor, text='Bağlantı Kesildi!')
         users[interlocutor]['interlocutor'] = None
         users[user]['interlocutor'] = None
 
@@ -80,7 +80,7 @@ def send(bot, update):
     user = update.message.chat_id
     interlocutor = users[user].get('interlocutor')
     if not interlocutor:
-        bot.sendMessage(user, text="You haven't connect. Enter /find")
+        bot.sendMessage(user, text="Henüz Bir Konuşma Yok Bağlanmak İçin /find Yazınız!")
     else:
         bot.sendMessage(interlocutor, text=update.message.text)
 
@@ -89,12 +89,12 @@ def start(bot, update):
     reply_markup = ReplyKeyboardMarkup(
         [[KeyboardButton('/find')]], resize_keyboard=True)
     bot.sendMessage(update.message.chat_id,
-                    text='Welcome to chat. Enter /find',
+                    text='Sohbete Hoşgeldin Lütfen /find Yazarak Rastgele Bağlantı Kur!',
                     reply_markup=reply_markup)
 
 
 def help(bot, update):
-    bot.sendMessage(update.message.chat_id, text='Enter /find to connect')
+    bot.sendMessage(update.message.chat_id, text='/find Yazarak Bağlantıya Katıl!')
 
 
 def main():
