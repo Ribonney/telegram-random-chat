@@ -91,7 +91,7 @@ def start(bot, update):
 
 
 def help(bot, update):
-    bot.sendMessage(update.message.chat_id, text='Bu Bot Eğlence Amaçlı [Burak](tg://user?id=991103511) Tarafından Geliştirildi.\n\n/find Yazarak /find yazan kullanıcılar ile bağlantı kurabilir ve onlarla anonim olarak sohbet edebilirsiniz.', telegram.ParseMode=MARKDOWN)
+    bot.sendMessage(update.message.chat_id, text='Bu Bot Eğlence Amaçlı [Burak](tg://user?id=991103511) Tarafından Geliştirildi.\n\n/find Yazarak /find yazan kullanıcılar ile bağlantı kurabilir ve onlarla anonim olarak sohbet edebilirsiniz.', parse_mode='MarkDown')
 
 
 def main():
