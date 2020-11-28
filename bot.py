@@ -86,15 +86,12 @@ def send(bot, update):
 
 
 def start(bot, update):
-    reply_markup = ReplyKeyboardMarkup(
-        [[KeyboardButton('/find')]], resize_keyboard=True)
     bot.sendMessage(update.message.chat_id,
-                    text='Sohbete Hoşgeldin Lütfen /find Yazarak Rastgele Bağlantı Kur!',
-                    reply_markup=reply_markup)
+                    text='Sohbete Hoşgeldin /help Yazarak Yardım Alabilirsin.')
 
 
 def help(bot, update):
-    bot.sendMessage(update.message.chat_id, text='/find Yazarak Bağlantıya Katıl!')
+    bot.sendMessage(update.message.chat_id, text='Bu Bot Eğlence Amaçlı [Burak](tg://user?id=991103511) Tarafından Geliştirildi.\n\n/find Yazarak /find yazan kullanıcılar ile bağlantı kurabilir ve onlarla anonim olarak sohbet edebilirsiniz.', telegram.ParseMode=MARKDOWN)
 
 
 def main():
