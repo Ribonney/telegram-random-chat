@@ -3,23 +3,11 @@ from config import token
 from collections import defaultdict
 from telegram import ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-"""
-users - карта пользователей: статусы и кто с кем связан
-Структура:
-{
-    '<user_id>': {'status': 'free/busy', 'interlocutor': '<interlocutor_id>',
-    '<user_id>': ...,
-}
 
-user_id и interlocutor_id - это номер чатов (update.message.chat_id)
-"""
 users = defaultdict(dict)
 
 
 def scan(current):
-    """
-    Поиск свободных собеседников для пользователя current
-    """
     for key, value in users.items():
         if key != current and value.get('status') == 'free':
             return key
@@ -27,10 +15,6 @@ def scan(current):
 
 
 def connect(user, interlocutor):
-    """
-    Соединение двух пользователей.
-    Установка статусов "занят" и взаимная привязка.
-    """
     users[user]['status'] = 'busy'
     users[user]['interlocutor'] = interlocutor
     users[interlocutor]['status'] = 'busy'
@@ -38,10 +22,6 @@ def connect(user, interlocutor):
 
 
 def find(bot, update):
-    """
-    Выставление статуса "свободен", запуск поиска и подключение,
-    если собеседник найден
-    """
     user = update.message.chat_id
     bot.sendMessage(user, text='Kullanıcı Aranıyor...')
     interlocutor = users[user].get('interlocutor')
@@ -59,10 +39,6 @@ def find(bot, update):
 
 
 def disconnect(bot, update):
-    """
-    Отключение от чата с сохранением статуса "занят",
-    чтобы не принимать новых сбеседников
-    """
     user = update.message.chat_id
     bot.sendMessage(user, text='Bağlantı Kesildi!')
     users[user]['status'] = 'busy'
@@ -74,9 +50,6 @@ def disconnect(bot, update):
 
 
 def send(bot, update):
-    """
-    Пересылка сообщения, если у пользователя был собеседник
-    """
     user = update.message.chat_id
     interlocutor = users[user].get('interlocutor')
     if not interlocutor:
